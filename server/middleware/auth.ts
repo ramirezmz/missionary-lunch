@@ -3,6 +3,7 @@ import { verifyToken } from "../services/token"
 
 export default defineEventHandler(async (event) => {
   if (!event.path.startsWith("/api")) return
+  if (event.path.startsWith("/api/login")) return
 
   const session = getHeader(event, 'authorization')?.replace('Bearer ', '') ?? ''
 
