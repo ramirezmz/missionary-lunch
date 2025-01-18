@@ -1,6 +1,7 @@
 import { z } from "zod"
 import prisma from "~/lib/prisma"
 import { comparePassword } from "~/server/services/hashedPassword"
+import { generateToken } from "~/server/services/token"
 
 const LoginSchema = z.object({
   email: z.string().email({
@@ -39,12 +40,14 @@ export default defineEventHandler(async (event) => {
       },
     }
   }
+  const token = generateToken(user.id)
   
   return {
     status: 200,
     body: {
       message: "Login successful",
       data: user,
+      token,
     },
   }
 
