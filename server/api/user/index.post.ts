@@ -5,10 +5,12 @@ import {hashedPassword} from "~/server/services/hashedPassword"
 export default defineEventHandler(async (event) => {
   const content = await readValidatedBody(event, UserSchema.parse)
   const newHashedPassword = await hashedPassword(content.password)
-
+  
   const payload = {
     ...content,
-    password: newHashedPassword
+    password: newHashedPassword,
+    createdBy: event.context.auth.id,
+    updatedBy: event.context.auth.id
   }
  try {
    const user = await prisma.user.create({
@@ -23,13 +25,11 @@ export default defineEventHandler(async (event) => {
   }
 }
  } catch (error: any) {
-    return {
-      status: 500,
-      body: {
-        message: "Error creating user",
-        error: error.message
-      }
-    }
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Error creating user",
+      message: error.message
+    })
  }
   
 })
