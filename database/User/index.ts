@@ -19,3 +19,8 @@ export const UpdateUserSchema = z.object({
 export const UserRouterSchema = z.object({
   userId: z.string()
 })
+
+export const UserLoginSchema = z.object({
+  email: z.string().email({ message: "Email is required" }),
+  password: z.string(),
+})
