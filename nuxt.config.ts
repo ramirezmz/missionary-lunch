@@ -2,7 +2,12 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint', '@prisma/nuxt'],
+  modules: [
+    '@nuxt/eslint',
+    '@prisma/nuxt',
+    '@nuxtjs/tailwindcss',
+    'shadcn-nuxt'
+  ],
   runtimeConfig: {
     apiSecret: {
       development: {
@@ -10,5 +15,9 @@ export default defineNuxtConfig({
         jwt_secret: process.env.JWT_SECRET,
       }
     }
+  },
+  shadcn: {
+    prefix: '',
+    componentDir: './components/ui'
   }
 })
