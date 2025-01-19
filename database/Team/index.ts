@@ -7,3 +7,11 @@ export const TeamSchema = z.object({
   createdAt: z.string().optional(),
   updatedAt: z.string().optional(),
 })
+
+export const TeamRouterSchema = z.object({
+  teamId: z.string()
+})
+
+export const UpdateTeamSchema = z.object({
+  name: z.string().optional(),
+})
