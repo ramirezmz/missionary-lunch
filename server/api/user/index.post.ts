@@ -24,11 +24,11 @@ export default defineEventHandler(async (event) => {
       data: user
   }
 }
- } catch (error: any) {
+ } catch (error: unknown) {
     throw createError({
       statusCode: 500,
       statusMessage: "Error creating user",
-      message: error.message
+      message: (error as Error).message
     })
  }
   
