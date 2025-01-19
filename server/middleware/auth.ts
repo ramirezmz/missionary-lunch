@@ -30,5 +30,13 @@ export default defineEventHandler(async (event) => {
     }
   })
 
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "Unauthorized",
+      message: "User not found"
+    })
+  }
+
   event.context.auth = user
 })
