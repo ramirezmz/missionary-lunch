@@ -4,13 +4,16 @@ import {hashedPassword} from "~/server/services/hashedPassword"
 
 export default defineEventHandler(async (event) => {
   const content = await readValidatedBody(event, UserSchema.parse)
-  const newHashedPassword = await hashedPassword(content.password)
+  let newHashedPassword = null
+  if (content?.password) {
+    newHashedPassword = await hashedPassword(content.password)
+  }
   
   const payload = {
     ...content,
-    password: newHashedPassword,
-    createdBy: event.context.auth.id,
-    updatedBy: event.context.auth.id
+    createdBy: event.context?.auth?.id ?? content.email,
+    updatedBy: event.context?.auth?.id ?? content.email,
+    ...(newHashedPassword && {password: newHashedPassword})
   }
  try {
    const user = await prisma.user.create({
