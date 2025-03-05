@@ -29,8 +29,11 @@ export default defineEventHandler(async (event) => {
       },
     }
   }
-
-  const passwordMatch = comparePassword(content.password, content.password)
+if (!user.password) {
+  // Precisamos fazer que o usuario cadastre sua senha  
+  return 
+}
+  const passwordMatch = comparePassword(content.password, user.password)
 
   if (!passwordMatch) {
     return {
