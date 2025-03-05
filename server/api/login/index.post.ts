@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const passwordMatch = comparePassword(content.password, user.password)
+  const passwordMatch = comparePassword(content.password, content.password)
 
   if (!passwordMatch) {
     return {
